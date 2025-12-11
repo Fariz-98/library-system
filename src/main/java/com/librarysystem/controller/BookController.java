@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/books")
 @Tag(name = "Books", description = "Operations related to books and borrowing")
 public class BookController {
 
@@ -31,7 +31,7 @@ public class BookController {
         this.bookService = bookService;
     }
 
-    @PostMapping("/books")
+    @PostMapping
     @Operation(summary = "Register a new copy")
     @ApiResponses({
             @ApiResponse(
@@ -51,7 +51,7 @@ public class BookController {
         return ResponseEntity.created(location).body(response);
     }
 
-    @GetMapping("/books")
+    @GetMapping
     @Operation(summary = "Get all books")
     @ApiResponses({
             @ApiResponse(
