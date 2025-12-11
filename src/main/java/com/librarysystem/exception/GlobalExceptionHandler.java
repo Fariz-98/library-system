@@ -2,6 +2,7 @@ package com.librarysystem.exception;
 
 import com.librarysystem.exception.dto.ErrorResponse;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.Nullable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
@@ -56,6 +58,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleAll(Exception ex, HttpServletRequest request) {
+        log.error("Unexpected error while processing request {}={}",
+                request.getRequestURI(), ex.getMessage(), ex);
+
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
 
         ErrorResponse body = ErrorResponse.builder()
